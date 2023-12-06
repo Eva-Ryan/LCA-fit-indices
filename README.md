@@ -1,6 +1,6 @@
 # LCA-fit-indices
 
-Simulation study code to test the performance of a normed fit index measure proposed for latent class analysis.
+Simulation study code to test the performance of normed and non-normed fit indices proposed for latent class analysis.
 
 ## Description of files
 
@@ -35,15 +35,14 @@ The R script files should be run in the following order.
 
     The files [2b Run BLRT in LatentGold - first 500 datasets.R](https://github.com/Eva-Ryan/LCA-fit-indices/blob/main/2b%20Run%20BLRT%20in%20LatentGold%20-%20first%20500%20datasets.R) and [2b Run BLRT in LatentGold - last 500 datasets.R](https://github.com/Eva-Ryan/LCA-fit-indices/blob/main/2b%20Run%20BLRT%20in%20LatentGold%20-%20last%20500%20datasets.R) contain code to run the bootstrapped likelihood ratio test for each of the models fitted to each simulated dataset. As running these tests produces a huge amount of output, the process is split across two scripts/output .csv files. Running these scripts produces similar files to those listed above but including results from the BLRTs.
 
-3.  The file [3 Prepare fit statistics for plotting.R](https://github.com/Eva-Ryan/LCA-fit-indices/blob/main/3%20Prepare%20fit%20statistics%20for%20plotting.R) contains code to extract the required $G^2$ values from the raw LatentGold output and calculate the AIC, BIC and NFI values for each fitted model. The calculated fit statistics for different sample sizes N are then outputted in .csv files called "sims_N\_output_summary.csv" . Similarly, the file [3b Prepare BLRT for summarising.R](https://github.com/Eva-Ryan/LCA-fit-indices/blob/main/3b%20Prepare%20BLRT%20for%20summarising.R) contains code to extract BLRT p-values from the raw LatentGold output. These values are outputted in .csv files called "sims_N\_\_BLRT_summary.csv".
+3.  The file [3 Prepare fit statistics for plotting.R](https://github.com/Eva-Ryan/LCA-fit-indices/blob/main/3%20Prepare%20fit%20statistics%20for%20plotting.R) contains code to extract the required $G^2$ values from the raw LatentGold output and calculate the AIC, BIC, NFI, NNFI, and RMSEA values for each fitted model. The calculated fit statistics for different sample sizes N are then outputted in .csv files called "sims_N\_output_summary.csv" . Similarly, the file [3b Prepare BLRT for summarising.R](https://github.com/Eva-Ryan/LCA-fit-indices/blob/main/3b%20Prepare%20BLRT%20for%20summarising.R) contains code to extract BLRT p-values from the raw LatentGold output. These values are outputted in .csv files called "sims_N\_\_BLRT_summary.csv".
 
-4.  The file [4 Fit stats plots.R](https://github.com/Eva-Ryan/LCA-fit-indices/blob/main/4%20Fit%20stats%20plots.R) contains code to create the below summary plot of average AIC, BIC, and NFI values for LCA models with 1-6 classes across the different sample sizes considered in the simulation study:
+4.  The file [4 Fit stats plots.R](https://github.com/Eva-Ryan/LCA-fit-indices/blob/main/4%20Fit%20stats%20plots.R) contains code to create individual plots for each fit index (except the RMSEA), and the below summary plot of average AIC, BIC, and NFI values for LCA models with 1-6 classes across the different sample sizes considered in the simulation study:
 
     ![](https://github.com/Eva-Ryan/LCA-fit-indices/blob/main/Plots/All_plots.jpg)
 
-```{=html}
 <!-- -->
-```
+
 5.  The file [5 Fit stats criteria class selection summary.R](https://github.com/Eva-Ryan/LCA-fit-indices/blob/main/5%20Fit%20stats%20criteria%20class%20selection%20summary.R) contains code to apply the various AIC, BIC, and NFI model selection criteria to the simulations and calculate the percentage of simulations for which each criteria selects each number of classes as the best LCA model fit.
 
 6.  The folder [Final output summaries](https://github.com/Eva-Ryan/LCA-fit-indices/tree/main/Final%20output%20summaries) contains the .csv files of fit statistics created by running the code in the files [3 Prepare fit statistics for plotting.R](https://github.com/Eva-Ryan/LCA-fit-indices/blob/main/3%20Prepare%20fit%20statistics%20for%20plotting.R) and [3b Prepare BLRT for summarising.R](https://github.com/Eva-Ryan/LCA-fit-indices/blob/main/3b%20Prepare%20BLRT%20for%20summarising.R).
