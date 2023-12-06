@@ -55,10 +55,15 @@ format_output <- function(file_names, max_class, N){
 
   ## Add AIC/BIC/NFI measures
 
-  # initialise AIC, BIC, and NFI columns
+  # initialise AIC, BIC, NFI, NNFI, and RMSEA columns
   df$AIC <- rep(NA, (1000*max_class))
   df$BIC <- rep(NA, (1000*max_class))
   df$NFI <- rep(NA, (1000*max_class))
+  df$NNFI <- rep(NA, (1000*max_class))
+  df$RMSEA <- rep(NA, (1000*max_class))
+
+  # calculate degrees of freedom for null model
+  df_null <- (2^6) - ((1-1) + (1*6*1)) - 1
 
   # select indices of rows corresponding to null models
   ind_null <- which(df$Number_of_classes == 1, arr.ind = TRUE)
@@ -73,6 +78,9 @@ format_output <- function(file_names, max_class, N){
     # calculate number of free parameters (assuming 6 dichotomous items)
     P <- (i-1) + (i*6*1)
 
+    # calculate degrees of freedom
+    deg_free <- (2^6) - P - 1
+
     # calculate AIC (using formulation from Collins & Lanza 2010)
     df$AIC[ind] <- df$Gsquared[ind] + 2*P
 
@@ -82,6 +90,17 @@ format_output <- function(file_names, max_class, N){
     # calculate NFI
     df$NFI[ind] <- (df$Gsquared[ind_null] - df$Gsquared[ind])/df$Gsquared[ind_null]
 
+    # calculate NNFI
+    df$NNFI[ind] <- ((df$Gsquared[ind_null]/df_null) - (df$Gsquared[ind])/deg_free ) /
+      ((df$Gsquared[ind_null]/df_null) - 1)
+
+    # calculate RMSEA if possible
+    for(j in 1:length(ind)){
+      if((df$Gsquared[ind[j]] - deg_free) > 0){
+        df$RMSEA[ind[j]] <- sqrt((df$Gsquared[ind[j]] - deg_free) / ((N-1)*deg_free))
+      }
+    }
+
   }
 
   return(df)
@@ -90,7 +109,7 @@ format_output <- function(file_names, max_class, N){
 
 ## specify simulation
 # sample size
-N <- 5000
+N <- 100000
 # max number of classes in fitted models
 max_class <- 6
 # folder/file naming convention
