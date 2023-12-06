@@ -43,6 +43,10 @@ plot_means_CI <- function(file_names, max_class, N){
   NFIs <- as.data.frame(matrix(NA, nrow = max_class, ncol =  4))
   names(NFIs) <- c("classes", "means", "lower", "upper")
   NFIs$classes <- 1:max_class
+  # NNFI
+  NNFIs <- as.data.frame(matrix(NA, nrow = max_class, ncol =  4))
+  names(NNFIs) <- c("classes", "means", "lower", "upper")
+  NNFIs$classes <- 1:max_class
 
   # cycle through different number of classes
   for(c in 1:max_class){
@@ -64,6 +68,10 @@ plot_means_CI <- function(file_names, max_class, N){
     NFIs$means[c] <- mean(df_c$NFI)
     NFIs$lower[c] <- df_c$NFI[order(df_c$NFI)][25]
     NFIs$upper[c] <- df_c$NFI[order(df_c$NFI)][976]
+    # NNFI
+    NNFIs$means[c] <- mean(df_c$NNFI)
+    NNFIs$lower[c] <- df_c$NNFI[order(df_c$NNFI)][25]
+    NNFIs$upper[c] <- df_c$NNFI[order(df_c$NNFI)][976]
 
   }
 
@@ -104,10 +112,22 @@ plot_means_CI <- function(file_names, max_class, N){
     theme(plot.title = element_text(hjust = 0.5)) +
     scale_x_continuous(breaks = c(1:max_class))
 
+  # NNFI plot
+  nnfi_plot <- ggplot(NNFIs, aes(x = classes, y = means)) +
+    geom_line(linewidth = 1) +
+    geom_errorbar(linewidth = 1, width = .75, aes(ymin = lower, ymax = upper),
+                  colour = "red") +
+    geom_point(shape = 21, size = 2, fill = "white") +
+    theme_light() +
+    xlab("") + ylab("") +
+    ggtitle("NNFI") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    scale_x_continuous(breaks = c(1:max_class))
+
   ## save plots individually
 
   # set working directory to plots folder
-  setwd(paste0(directory, "/Plots and summary tables"))
+  setwd(paste0(directory, "/Plots"))
 
   # AIC
   ggsave(
@@ -137,7 +157,17 @@ plot_means_CI <- function(file_names, max_class, N){
     dpi = 600
   )
 
-  # return list of plots
+  # NNFI
+  ggsave(
+    filename = paste0(file_names, "_NNFI_plot.jpg"),
+    plot = nnfi_plot,
+    units = "in",
+    width = 7,
+    height = 5,
+    dpi = 600
+  )
+
+  # return list of plots - AIC/BIC/NFI only
   plot_list <- list()
   plot_list[[1]] <- aic_plot
   plot_list[[2]] <- bic_plot
@@ -152,17 +182,17 @@ plots_500 <- plot_means_CI(file_names = paste0("sims_", 500),
                            max_class = 6,
                            N = 500)
 plots_5000 <- plot_means_CI(file_names = paste0("sims_", 5000),
-                           max_class = 6,
-                           N = 5000)
-plots_10000 <- plot_means_CI(file_names = paste0("sims_", 10000),
                             max_class = 6,
-                            N = 10000)
+                            N = 5000)
+plots_10000 <- plot_means_CI(file_names = paste0("sims_", 10000),
+                             max_class = 6,
+                             N = 10000)
 plots_30000 <- plot_means_CI(file_names = paste0("sims_", 30000),
                              max_class = 6,
                              N = 30000)
 plots_100000 <- plot_means_CI(file_names = paste0("sims_", 100000),
-                             max_class = 6,
-                             N = 100000)
+                              max_class = 6,
+                              N = 100000)
 
 ## combine all plots together into one figure
 plot_grid <- grid.arrange(
