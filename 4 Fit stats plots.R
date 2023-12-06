@@ -160,7 +160,7 @@ plot_means_CI <- function(file_names, max_class, N){
   # NNFI
   ggsave(
     filename = paste0(file_names, "_NNFI_plot.jpg"),
-    plot = nfi_plot,
+    plot = nnfi_plot,
     units = "in",
     width = 7,
     height = 5,
@@ -182,17 +182,17 @@ plots_500 <- plot_means_CI(file_names = paste0("sims_", 500),
                            max_class = 6,
                            N = 500)
 plots_5000 <- plot_means_CI(file_names = paste0("sims_", 5000),
-                           max_class = 6,
-                           N = 5000)
-plots_10000 <- plot_means_CI(file_names = paste0("sims_", 10000),
                             max_class = 6,
-                            N = 10000)
+                            N = 5000)
+plots_10000 <- plot_means_CI(file_names = paste0("sims_", 10000),
+                             max_class = 6,
+                             N = 10000)
 plots_30000 <- plot_means_CI(file_names = paste0("sims_", 30000),
                              max_class = 6,
                              N = 30000)
 plots_100000 <- plot_means_CI(file_names = paste0("sims_", 100000),
-                             max_class = 6,
-                             N = 100000)
+                              max_class = 6,
+                              N = 100000)
 
 ## combine all plots together into one figure
 plot_grid <- grid.arrange(
