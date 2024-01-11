@@ -1,6 +1,6 @@
 # LCA-fit-indices
 
-Simulation study code to test the performance of normed and non-normed fit indices proposed for latent class analysis.
+Simulation study code to test the performance of normed and non-normed fit indices proposed for latent class analysis in the technical report [Can a Normed Fit Index Assist with Model Selection in Latent Class Analysis with Large Samples? A Preliminary Investigation](https://osf.io/preprints/psyarxiv/3qzvm).
 
 ## Description of files
 
