@@ -76,6 +76,8 @@ plot_means_CI <- function(file_names, max_class, N){
   }
 
   ## create plots
+  # only add titles to N = 500 plots
+  if(N == 500){
   # AIC plot
   aic_plot <- ggplot(AICs, aes(x = classes, y = means)) +
     geom_line(linewidth = 1) +
@@ -123,6 +125,55 @@ plot_means_CI <- function(file_names, max_class, N){
     ggtitle("NNFI") +
     theme(plot.title = element_text(hjust = 0.5)) +
     scale_x_continuous(breaks = c(1:max_class))
+  }else{
+    # AIC plot
+    aic_plot <- ggplot(AICs, aes(x = classes, y = means)) +
+      geom_line(linewidth = 1) +
+      geom_errorbar(linewidth = 1, width = .75, aes(ymin = lower, ymax = upper),
+                    colour = "red") +
+      geom_point(shape = 21, size = 2, fill = "white") +
+      theme_light() +
+      xlab("") + ylab("") +
+      ggtitle("") +
+      theme(plot.title = element_text(hjust = 0.5)) +
+      scale_x_continuous(breaks = c(1:max_class))
+
+    # BIC plot
+    bic_plot <- ggplot(BICs, aes(x = classes, y = means)) +
+      geom_line(linewidth = 1) +
+      geom_errorbar(linewidth = 1, width = .75, aes(ymin = lower, ymax = upper),
+                    colour = "red") +
+      geom_point(shape = 21, size = 2, fill = "white") +
+      theme_light() +
+      xlab("") + ylab("") +
+      ggtitle("") +
+      theme(plot.title = element_text(hjust = 0.5)) +
+      scale_x_continuous(breaks = c(1:max_class))
+
+    # NFI plot
+    nfi_plot <- ggplot(NFIs, aes(x = classes, y = means)) +
+      geom_line(linewidth = 1) +
+      geom_errorbar(linewidth = 1, width = .75, aes(ymin = lower, ymax = upper),
+                    colour = "red") +
+      geom_point(shape = 21, size = 2, fill = "white") +
+      theme_light() +
+      xlab("") + ylab("") +
+      ggtitle("") +
+      theme(plot.title = element_text(hjust = 0.5)) +
+      scale_x_continuous(breaks = c(1:max_class))
+
+    # NNFI plot
+    nnfi_plot <- ggplot(NNFIs, aes(x = classes, y = means)) +
+      geom_line(linewidth = 1) +
+      geom_errorbar(linewidth = 1, width = .75, aes(ymin = lower, ymax = upper),
+                    colour = "red") +
+      geom_point(shape = 21, size = 2, fill = "white") +
+      theme_light() +
+      xlab("") + ylab("") +
+      ggtitle("") +
+      theme(plot.title = element_text(hjust = 0.5)) +
+      scale_x_continuous(breaks = c(1:max_class))
+  }
 
   ## save plots individually
 
